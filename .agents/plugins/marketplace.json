@@ -1,0 +1,68 @@
+{
+  "name": "graphops",
+  "interface": {
+    "displayName": "GraphOps"
+  },
+  "plugins": [
+    {
+      "name": "graphops",
+      "source": {
+        "source": "local",
+        "path": "./plugins/graphops"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "graphops-rpc",
+      "source": {
+        "source": "local",
+        "path": "./plugins/graphops-rpc"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "graphops-subgraphs",
+      "source": {
+        "source": "local",
+        "path": "./plugins/graphops-subgraphs"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "graphops-substreams",
+      "source": {
+        "source": "local",
+        "path": "./plugins/graphops-substreams"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "graphops-platform",
+      "source": {
+        "source": "local",
+        "path": "./plugins/graphops-platform"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

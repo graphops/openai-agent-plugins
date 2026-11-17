@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "graphops-docs": {
+      "type": "streamable-http",
+      "url": "https://docs.graphops.xyz/api/mcp"
+    }
+  }
+}

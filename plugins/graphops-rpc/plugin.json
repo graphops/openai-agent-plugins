@@ -1,0 +1,42 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "graphops-rpc",
+  "version": "1.0.0+f9caa4560f7b",
+  "description": "Read EVM and Bitcoin chain data with GraphOps RPC: query blocks, balances, contract calls and event logs through the RPC MCP server, and write bounded, recoverable JSON-RPC code.",
+  "author": {
+    "name": "GraphOps",
+    "url": "https://graphops.xyz"
+  },
+  "homepage": "https://docs.graphops.xyz/ai-agents",
+  "repository": "https://github.com/graphops/openai-agent-plugins",
+  "license": "MIT",
+  "keywords": [
+    "blockchain",
+    "rpc",
+    "json-rpc",
+    "ethereum",
+    "evm",
+    "bitcoin"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "GraphOps RPC",
+        "shortDescription": "Read EVM and Bitcoin chains",
+        "longDescription": "Read EVM and Bitcoin chain data with GraphOps RPC: query blocks, balances, contract calls and event logs through the RPC MCP server, and write bounded, recoverable JSON-RPC code. Includes the graphops skill for choosing between GraphOps services and handling API keys and error codes.",
+        "developerName": "GraphOps",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Read",
+          "Write"
+        ],
+        "websiteURL": "https://graphops.xyz",
+        "supportURL": "https://graphops.xyz/contact/",
+        "privacyPolicyURL": "https://graphops.xyz/privacy-policy/",
+        "termsOfServiceURL": "https://graphops.xyz/terms-of-service/",
+        "composerIcon": "./assets/graphops.png",
+        "logo": "./assets/graphops.png"
+      }
+    }
+  }
+}

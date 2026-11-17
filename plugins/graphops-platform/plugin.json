@@ -1,0 +1,42 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "graphops-platform",
+  "version": "1.0.0+4dbd127ace93",
+  "description": "Deploy and promote Managed Subgraphs, manage Endpoint Aliases, API keys and service accounts, read usage and credits, and run code with stored API keys, through the GraphOps CLI signed in as you.",
+  "author": {
+    "name": "GraphOps",
+    "url": "https://graphops.xyz"
+  },
+  "homepage": "https://docs.graphops.xyz/ai-agents",
+  "repository": "https://github.com/graphops/openai-agent-plugins",
+  "license": "MIT",
+  "keywords": [
+    "blockchain",
+    "subgraphs",
+    "deployment",
+    "api-keys",
+    "cli"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "GraphOps Platform",
+        "shortDescription": "Manage GraphOps with its CLI",
+        "longDescription": "Deploy and promote Managed Subgraphs, manage Endpoint Aliases, API keys and service accounts, read usage and credits, and run code with stored API keys, through the GraphOps CLI signed in as you. Includes the graphops skill for choosing between GraphOps services and handling API keys and error codes.",
+        "developerName": "GraphOps",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Interactive",
+          "Read",
+          "Write"
+        ],
+        "websiteURL": "https://graphops.xyz",
+        "supportURL": "https://graphops.xyz/contact/",
+        "privacyPolicyURL": "https://graphops.xyz/privacy-policy/",
+        "termsOfServiceURL": "https://graphops.xyz/terms-of-service/",
+        "composerIcon": "./assets/graphops.png",
+        "logo": "./assets/graphops.png"
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "graphops-subgraphs",
+  "version": "1.0.0+4b8108b56ecc",
+  "description": "Query indexed blockchain entities with GraphOps Subgraphs: read schemas, freshness and query results through the Subgraphs MCP server, and write paginated GraphQL code.",
+  "author": {
+    "name": "GraphOps",
+    "url": "https://graphops.xyz"
+  },
+  "homepage": "https://docs.graphops.xyz/ai-agents",
+  "repository": "https://github.com/graphops/openai-agent-plugins",
+  "license": "MIT",
+  "keywords": [
+    "blockchain",
+    "subgraphs",
+    "graphql",
+    "the-graph",
+    "indexing"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "GraphOps Subgraphs",
+        "shortDescription": "Query indexed onchain data",
+        "longDescription": "Query indexed blockchain entities with GraphOps Subgraphs: read schemas, freshness and query results through the Subgraphs MCP server, and write paginated GraphQL code. Includes the graphops skill for choosing between GraphOps services and handling API keys and error codes.",
+        "developerName": "GraphOps",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Read"
+        ],
+        "websiteURL": "https://graphops.xyz",
+        "supportURL": "https://graphops.xyz/contact/",
+        "privacyPolicyURL": "https://graphops.xyz/privacy-policy/",
+        "termsOfServiceURL": "https://graphops.xyz/terms-of-service/",
+        "composerIcon": "./assets/graphops.png",
+        "logo": "./assets/graphops.png"
+      }
+    }
+  }
+}

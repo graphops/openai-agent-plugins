@@ -1,0 +1,40 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "graphops-substreams",
+  "version": "1.0.0+67bc5a7afd72",
+  "description": "Stream ordered blockchain data with GraphOps Substreams: run packages, backfill block ranges and build sinks that resume from cursors and handle reorgs.",
+  "author": {
+    "name": "GraphOps",
+    "url": "https://graphops.xyz"
+  },
+  "homepage": "https://docs.graphops.xyz/ai-agents",
+  "repository": "https://github.com/graphops/openai-agent-plugins",
+  "license": "MIT",
+  "keywords": [
+    "blockchain",
+    "substreams",
+    "streaming",
+    "indexing",
+    "firehose"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "GraphOps Substreams",
+        "shortDescription": "Stream ordered block data",
+        "longDescription": "Stream ordered blockchain data with GraphOps Substreams: run packages, backfill block ranges and build sinks that resume from cursors and handle reorgs. Includes the graphops skill for choosing between GraphOps services and handling API keys and error codes.",
+        "developerName": "GraphOps",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Read"
+        ],
+        "websiteURL": "https://graphops.xyz",
+        "supportURL": "https://graphops.xyz/contact/",
+        "privacyPolicyURL": "https://graphops.xyz/privacy-policy/",
+        "termsOfServiceURL": "https://graphops.xyz/terms-of-service/",
+        "composerIcon": "./assets/graphops.png",
+        "logo": "./assets/graphops.png"
+      }
+    }
+  }
+}
