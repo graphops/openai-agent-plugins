@@ -2,7 +2,7 @@
 name: graphops-subgraphs
 description: Query indexed blockchain entities with GraphQL through GraphOps Subgraphs, by Deployment CID, Graph Network Subgraph ID or Endpoint Alias, authenticated with a GraphOps API key. Use when code or a question needs Subgraph data from subgraphs.graphops.xyz, pagination over entities, indexing freshness from _meta, or a choice of which Subgraph identifier an application should query.
 metadata:
-  version: d11cf3c01a0291c1
+  version: 02631f8cc54579d5
   source: https://docs.graphops.xyz/.well-known/agent-skills/graphops-subgraphs/SKILL.md
 ---
 
@@ -12,38 +12,48 @@ GraphOps Subgraphs serves GraphQL queries over indexed entities. Use it when a S
 indexes the data the task needs. If the task needs raw chain state or every block in order, see the
 `graphops` skill to choose another service.
 
-## Use the MCP tools when they're connected
-
-If the GraphOps Subgraphs MCP server (`https://subgraphs.graphops.xyz/v1/mcp`) is connected,
-answer questions with its tools instead of writing requests: `subgraph_get_meta` for indexing
-freshness, `subgraph_get_schema` before writing any query, and `subgraph_query` to run one. Each
-result states the block it reflects; report it. A failed call returns an `action`:
-`fix_arguments`, `narrow_request`, `retry_later` or `stop`; follow it. Write code against the
-endpoints below when the person needs code, not an answer.
-
 ## Connect
 
-- Read the key from `GRAPHOPS_SUBGRAPHS_API_KEY`. If it isn't set, ask the person to create a
-  Subgraphs key and set the variable; see [API keys](https://docs.graphops.xyz/platform/api-keys.md).
+- Read the key from `GRAPHOPS_API_KEY`. If it isn't set, ask the person to create a key with
+  Subgraphs access and set the variable; see [API keys](https://docs.graphops.xyz/platform/api-keys.md).
 - If the GraphOps CLI is installed, run the code with
   `graphops exec --product subgraphs -- <command>`, which sets the variable for that process only;
   see the `graphops-cli` skill.
-- Send a GraphQL `POST` with `Authorization: Bearer $GRAPHOPS_SUBGRAPHS_API_KEY` to one of:
+- Send a GraphQL `POST` with `Authorization: Bearer $GRAPHOPS_API_KEY` to one of:
 - `https://subgraphs.graphops.xyz/v1/deploymentCID/<DEPLOYMENT_CID>` for one exact version,
 - `https://subgraphs.graphops.xyz/v1/subgraphId/<SUBGRAPH_ID>` to follow a Graph Network
   Subgraph as it publishes new versions,
 - `https://subgraphs.graphops.xyz/v1/alias/<ALIAS>` for an Endpoint Alias the key's organization
   owns.
 - Which identifier an application should use decides how it behaves when a new version is
-  published. Read [Identifiers and Endpoint Aliases](https://docs.graphops.xyz/subgraphs/concepts/identifiers-and-aliases.md)
+  published. Read [Identifier types](https://docs.graphops.xyz/subgraphs/concepts/identifier-types.md)
   before choosing one for the person's code.
 
 ```sh
 curl -sS "https://subgraphs.graphops.xyz/v1/deploymentCID/$DEPLOYMENT_CID" \
-  -H "Authorization: Bearer $GRAPHOPS_SUBGRAPHS_API_KEY" \
+  -H "Authorization: Bearer $GRAPHOPS_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"query":"{ _meta { block { number hash } hasIndexingErrors } }"}'
 ```
+
+## Use the MCP tools when they're connected
+
+If the `graphops-subgraphs` MCP server is connected, explore a Subgraph with its tools instead of
+writing code. Code the application runs still calls the endpoint above.
+
+- Name the Subgraph with `target`, holding exactly one of `deploymentId`, `subgraphId` or `alias`.
+  Every result's `deployment` is the Deployment CID that answered.
+- Call `subgraph_get_schema` before writing a query. Its `note` explains the filter, ordering and
+  `block` arguments the compact schema leaves out.
+- `subgraph_get_meta` returns the indexed block and `hasIndexingErrors`.
+- `subgraph_query` takes one `query` operation, without introspection, and returns `data`, `errors`,
+  `indexedHead` (the block the data reflects) and, for full pages ordered by `id`, `pages` with the
+  next page's arguments.
+- GraphQL `errors` come back beside `data`, not as a tool error. A tool error's `action` says
+  whether to fix the arguments, ask for less, retry later or stop.
+
+The bounds below still apply. [MCP server](https://docs.graphops.xyz/subgraphs/mcp.md) is the reference for every
+tool.
 
 ## Make bounded, fresh queries
 
@@ -59,8 +69,8 @@ curl -sS "https://subgraphs.graphops.xyz/v1/deploymentCID/$DEPLOYMENT_CID" \
   answer. If `hasIndexingErrors` is `true`, say that the data may be incomplete. See
   [Sync and reorgs](https://docs.graphops.xyz/subgraphs/concepts/sync-and-reorgs.md).
 - A GraphQL response can return `200` with an `errors` array. Check it before using `data`.
-- Retry `429`, `502`, `503` and `504` with exponential backoff and jitter, and cap total retry
-  time.
+- Retry a `429` only after the seconds in its `Retry-After` header. Retry `429`, `502`, `503` and
+  `504` with exponential backoff and jitter, and cap total retry time.
 
 ## Leave Managed Subgraphs to the person
 
@@ -69,18 +79,18 @@ the GraphOps CLI installed and the person's agreement, the `graphops-cli` skill 
 deploy, stage, promote and retarget through it as the person. Otherwise they manage those in the
 GraphOps platform, and you can explain the steps from
 [Managed Subgraphs](https://docs.graphops.xyz/subgraphs/managed-subgraphs.md) and
-[Deploy with Graph CLI](https://docs.graphops.xyz/subgraphs/guides/deploy-with-graph-cli.md).
+[Deploy your own Subgraph](https://docs.graphops.xyz/subgraphs/guides/deploy-your-subgraph.md).
 
 ## When a query fails
 
-| Response                                                | What to do                                                                                                                                     |
-| ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `401`                                                   | The key is missing or invalid. Stop and ask the person to check `GRAPHOPS_SUBGRAPHS_API_KEY`.                                                  |
-| `403` with `credits_exhausted` or `usage_access_paused` | Stop and tell the person. Don't retry.                                                                                                         |
-| `404`                                                   | The identifier doesn't resolve, or the Endpoint Alias belongs to another organization. Check the identifier.                                   |
-| Subgraph unavailable                                    | No indexer is serving that deployment. Read the matching section of [Troubleshooting](https://docs.graphops.xyz/subgraphs/troubleshooting.md). |
-| GraphQL validation errors                               | The query doesn't match the schema. Re-read the schema; don't guess field names.                                                               |
-| `429`                                                   | Back off and retry with jitter. Reduce concurrency if it repeats.                                                                              |
+| Response                                                | What to do                                                                                                                                                                                                                                             |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `401`                                                   | The key is missing or invalid. Stop and ask the person to check `GRAPHOPS_API_KEY`.                                                                                                                                                                    |
+| `403` with `credits_exhausted` or `usage_access_paused` | Stop and tell the person. Don't retry.                                                                                                                                                                                                                 |
+| `404`                                                   | The identifier doesn't resolve, or the Endpoint Alias belongs to another organization. Check the identifier.                                                                                                                                           |
+| Subgraph unavailable                                    | No indexer is serving that deployment. Read the matching section of [Troubleshooting](https://docs.graphops.xyz/subgraphs/troubleshooting.md).                                                                                                         |
+| GraphQL validation errors                               | The query doesn't match the schema. Re-read the schema; don't guess field names.                                                                                                                                                                       |
+| `429`                                                   | `request_rate_limited`: wait for `Retry-After`, then retry with backoff and jitter. The limit counts the whole organization, so reduce query rate if it repeats. See [Query rate](https://docs.graphops.xyz/subgraphs/usage-and-limits.md#query-rate). |
 
 ## Pages to read for the task
 

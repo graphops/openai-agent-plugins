@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "graphops-platform",
-  "version": "1.0.0+4dbd127ace93",
+  "version": "1.0.1+cdd385da52e2",
   "description": "Deploy and promote Managed Subgraphs, manage Endpoint Aliases, API keys and service accounts, read usage and credits, and run code with stored API keys, through the GraphOps CLI signed in as you.",
   "author": {
     "name": "GraphOps",

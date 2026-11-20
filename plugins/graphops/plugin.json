@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "graphops",
-  "version": "1.0.0+c5493939fb3a",
+  "version": "1.0.1+d64ea5c3a76c",
   "description": "Choose between GraphOps RPC, Subgraphs and Substreams, handle GraphOps API keys and error codes, and search the GraphOps documentation through its MCP server.",
   "author": {
     "name": "GraphOps",

@@ -2,7 +2,7 @@
 name: graphops-substreams
 description: Stream ordered blockchain data with GraphOps Substreams over gRPC, using the Substreams CLI, sinks or a gRPC client authenticated with a GraphOps API key. Use when code needs every block or a Substreams module's output in order, a backfill over a block range, a sink that writes to a database, or a consumer that must resume from cursors and handle reorgs through *.substreams.graphops.xyz.
 metadata:
-  version: c4ebd3a4ddac8be6
+  version: 9fac094481b92e5e
   source: https://docs.graphops.xyz/.well-known/agent-skills/graphops-substreams/SKILL.md
 ---
 
@@ -16,9 +16,9 @@ indexed entities, see the `graphops` skill to choose another service.
 
 - Read the key from `SUBSTREAMS_API_KEY`, which the `substreams` CLI and its sinks send as the
   `x-api-key` header. Raw gRPC clients send `x-api-key` request metadata themselves. If the key
-  isn't set, ask the person to create a Substreams key and set the variable; see
+  isn't set, ask the person to create a key with Substreams access and set the variable; see
   [API keys](https://docs.graphops.xyz/platform/api-keys.md). If the GraphOps CLI is installed,
-  `graphops substreams run|gui|sink` supply a stored key themselves and
+  `graphops substreams run|gui|sink` supply the organization's stored key themselves and
   `graphops exec --product substreams --network <network> -- <command>` sets it, with the GraphOps
   endpoint, for any other command such as a sink; pass that endpoint with `-e` too. See the
   `graphops-cli` skill.
@@ -43,7 +43,7 @@ substreams run \
   until the output is right. Every block streamed uses credits.
 - Split large backfills into ranges and checkpoint progress. See
   [Backfill a range](https://docs.graphops.xyz/substreams/guides/backfill-a-range.md).
-- Bound the number of concurrent streams and use backoff when reconnecting.
+- Bound the number of concurrent streams, and how fast you open them. Use backoff when reconnecting.
 - Inspect a package's modules and output types before running it. See
   [Packages and modules](https://docs.graphops.xyz/substreams/concepts/packages-and-modules.md) and
   [Discover Substreams](https://docs.graphops.xyz/substreams/guides/discover-packages.md).
@@ -62,13 +62,14 @@ Read [Cursors and reorgs](https://docs.graphops.xyz/substreams/concepts/cursors-
 
 ## When a stream fails
 
-| Symptom                                                   | What to do                                                                                                                                             |
-| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Authentication fails                                      | Stop and ask the person to check `SUBSTREAMS_API_KEY` and that it is a Substreams key.                                                                 |
-| Refused with `credits_exhausted` or `usage_access_paused` | Stop and tell the person. Don't reconnect.                                                                                                             |
-| Refused with a valid key                                  | Read [Stream is refused or ends with a valid key](https://docs.graphops.xyz/substreams/troubleshooting.md#stream-is-refused-or-ends-with-a-valid-key). |
-| Package or module not found                               | Check the package reference and module name against the package.                                                                                       |
-| Disconnects                                               | Reconnect with backoff from the last committed cursor.                                                                                                 |
+| Symptom                                                   | What to do                                                                                                                                                                                                                                 |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Authentication fails                                      | Stop and ask the person to check `SUBSTREAMS_API_KEY` and that it is a Substreams key.                                                                                                                                                     |
+| Refused with `credits_exhausted` or `usage_access_paused` | Stop and tell the person. Don't reconnect.                                                                                                                                                                                                 |
+| Refused with a valid key                                  | Read [Stream is refused or ends with a valid key](https://docs.graphops.xyz/substreams/troubleshooting.md#stream-is-refused-or-ends-with-a-valid-key).                                                                                     |
+| Refused with `RESOURCE_EXHAUSTED`                         | Read [Stream refused with `RESOURCE_EXHAUSTED`](https://docs.graphops.xyz/substreams/troubleshooting.md#stream-refused-with-resource_exhausted). For `request_rate_limited`, wait for `retryAfterSeconds` before opening the stream again. |
+| Package or module not found                               | Check the package reference and module name against the package.                                                                                                                                                                           |
+| Disconnects                                               | Reconnect with backoff from the last committed cursor.                                                                                                                                                                                     |
 
 [Troubleshooting](https://docs.graphops.xyz/substreams/troubleshooting.md) covers each case in detail.
 

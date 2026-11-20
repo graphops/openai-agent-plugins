@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "graphops-rpc",
-  "version": "1.0.0+f9caa4560f7b",
+  "version": "1.0.1+6e869862c940",
   "description": "Read EVM and Bitcoin chain data with GraphOps RPC: query blocks, balances, contract calls and event logs through the RPC MCP server, and write bounded, recoverable JSON-RPC code.",
   "author": {
     "name": "GraphOps",

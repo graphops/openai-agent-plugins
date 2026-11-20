@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "graphops-substreams",
-  "version": "1.0.0+67bc5a7afd72",
+  "version": "1.0.1+5b42127a90fc",
   "description": "Stream ordered blockchain data with GraphOps Substreams: run packages, backfill block ranges and build sinks that resume from cursors and handle reorgs.",
   "author": {
     "name": "GraphOps",

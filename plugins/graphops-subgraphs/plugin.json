@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "graphops-subgraphs",
-  "version": "1.0.0+4b8108b56ecc",
+  "version": "1.0.1+11c6006f61d2",
   "description": "Query indexed blockchain entities with GraphOps Subgraphs: read schemas, freshness and query results through the Subgraphs MCP server, and write paginated GraphQL code.",
   "author": {
     "name": "GraphOps",

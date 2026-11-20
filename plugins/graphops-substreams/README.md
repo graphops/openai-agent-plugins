@@ -11,7 +11,7 @@ codex plugin add graphops-substreams@graphops
 
 ## Set up
 
-Set `SUBSTREAMS_API_KEY` to a GraphOps Substreams API key in the environment where the `substreams` CLI and your sinks run. The skill reads the key from there and never asks you to paste it into the conversation. With the GraphOps CLI installed, `graphops substreams key create` stores a key and `graphops substreams run` uses it.
+Set `SUBSTREAMS_API_KEY` to a GraphOps query key that includes Substreams in the environment where the `substreams` CLI and your sinks run. The skill reads the key from there and never asks you to paste it into the conversation. With the GraphOps CLI installed, `graphops substreams run`, `gui` and `sink` use your organization's stored key, and `graphops exec --product substreams` sets the variable for other tools.
 
 ## Contents
 
